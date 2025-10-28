@@ -1,15 +1,12 @@
 Simple User and Account Management System
 
-This system manages users, their roles, and permissions, along with bank accounts spread across multiple banks and branches. Users can be normal users or bank users and may hold multiple accounts across different banks and branches. Accounts can be of various types such as Savings, Current, or Term Deposits, and may be operated by minors or via Power of Attorney (POA).
+This system manages users, their roles, and permissions, along with bank accounts spread across multiple banks and branches. Users can be normal or bank users and may have multiple accounts in different banks. Accounts can be of different types such as Savings, Current, or Term Deposits, and can be operated by minors or Power of Attorney (POA).
 
-The system is designed to support comprehensive multi-bank and multi-branch management, enabling seamless operations across a diverse financial ecosystem. Accounts can be maintained in multiple currencies to accommodate Non-Resident Indian (NRI) users, enhancing the system’s global usability.
-
-A robust role-based access control (RBAC) mechanism ensures that users have permissions tailored to their roles, providing security and operational governance. Key user operations include depositing funds, withdrawing money (subject to predefined limits), closing accounts (restricted by certain conditions), checking balances, and managing account activities with controlled access.
-
-RESTful APIs are provided for managing users and accounts, including endpoints for creating, reading, updating, and deleting records. These APIs are designed to be secure, efficient, and easy to integrate with client applications.
-
-For enhanced security, the system optionally supports JWT authentication using RS256 signing with private and public keys, safeguarding user sessions and API access.
-
-The solution includes database schema migration scripts and comprehensive documentation, ensuring smooth setup, maintainability, and scalability of the system.
-
-Overall, this system aims to provide a flexible, secure, and extensible platform for managing user roles, bank accounts, and transactions in a multi-institution environment.
+Key features include:
+- Multiple banks and branches management.
+- Accounts in multiple currencies (for NRI accounts).
+- Role-based access control for users.
+- Operations such as deposit, withdrawal (with limits), account closure (limited), balance checking (limited), and account operation (limited).
+- REST APIs to create, read, update, and delete users and accounts.
+- Secure authentication using JWT with RS256 signing (optional bonus).
+- Data migration and proper documentation.
