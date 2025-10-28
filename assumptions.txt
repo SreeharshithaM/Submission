@@ -1,0 +1,16 @@
+Assumptions for Simple User and Account Management System:
+
+1. Each user is uniquely identified by a User ID.
+2. A user can have multiple roles, and each role has specific permissions.
+3. Each bank has multiple branches identified by a branch code.
+4. Accounts are uniquely identified by an Account Number.
+5. Account types include Saving, Current, and Term Deposits.
+6. Term Deposits are treated as special accounts with fixed maturity periods.
+7. Accounts can be operated by minors or POA, with some operations restricted based on age or permissions.
+8. Currency codes follow ISO 4217 standard (e.g., USD, INR).
+9. Withdrawal and account closure are subject to limits based on account type and user role.
+10. Users must authenticate before accessing any account operation.
+11. Data migration will use SQL Server and support scripts for populating initial data.
+12. APIs adhere to RESTful standards with endpoints /users, /accounts, and optionally /banks.
+13. No executable, binary, or compiled files are part of the submission.
+14. Extra security is provided by implementing JWT with RS256 signatures.
