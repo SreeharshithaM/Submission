@@ -1,3 +1,9 @@
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'BankingSystem')
+BEGIN
+    EXEC('CREATE SCHEMA BankingSystem');
+END;
+GO
+
 -- Banks and Branches
 CREATE TABLE Banks (
     BankID INT PRIMARY KEY IDENTITY(1,1),
