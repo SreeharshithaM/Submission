@@ -1,27 +1,20 @@
--- Create Schema if not exists
-IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'BankingSystem')
-BEGIN
-    EXEC('CREATE SCHEMA BankingSystem');
-END;
-GO
-
 -- Banks and Branches
-CREATE TABLE BankingSystem.Banks (
+CREATE TABLE Banks (
     BankID INT PRIMARY KEY IDENTITY(1,1),
     BankName VARCHAR(100) NOT NULL,
     BankCode VARCHAR(10) NOT NULL UNIQUE
 );
 
-CREATE TABLE BankingSystem.Branches (
+CREATE TABLE Branches (
     BranchID INT PRIMARY KEY IDENTITY(1,1),
     BankID INT NOT NULL,
     BranchCode VARCHAR(10) NOT NULL,
     BranchName VARCHAR(100) NOT NULL,
-    FOREIGN KEY (BankID) REFERENCES BankingSystem.Banks(BankID)
+    FOREIGN KEY (BankID) REFERENCES Banks(BankID)
 );
 
 -- Users
-CREATE TABLE BankingSystem.Users (
+CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
     Username VARCHAR(50) NOT NULL UNIQUE,
     FullName VARCHAR(100),
@@ -32,37 +25,37 @@ CREATE TABLE BankingSystem.Users (
 );
 
 -- Roles and UserRoles (Many to Many)
-CREATE TABLE BankingSystem.Roles (
+CREATE TABLE Roles (
     RoleID INT PRIMARY KEY IDENTITY(1,1),
     RoleName VARCHAR(50) NOT NULL UNIQUE,
     Description VARCHAR(255)
 );
 
-CREATE TABLE BankingSystem.UserRoles (
+CREATE TABLE UserRoles (
     UserID INT NOT NULL,
     RoleID INT NOT NULL,
     PRIMARY KEY (UserID, RoleID),
-    FOREIGN KEY (UserID) REFERENCES BankingSystem.Users(UserID),
-    FOREIGN KEY (RoleID) REFERENCES BankingSystem.Roles(RoleID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
 
 -- Permissions and RolePermissions (Many to Many)
-CREATE TABLE BankingSystem.Permissions (
+CREATE TABLE Permissions (
     PermissionID INT PRIMARY KEY IDENTITY(1,1),
     PermissionName VARCHAR(50) NOT NULL UNIQUE,
     Description VARCHAR(255)
 );
 
-CREATE TABLE BankingSystem.RolePermissions (
+CREATE TABLE RolePermissions (
     RoleID INT NOT NULL,
     PermissionID INT NOT NULL,
     PRIMARY KEY (RoleID, PermissionID),
-    FOREIGN KEY (RoleID) REFERENCES BankingSystem.Roles(RoleID),
-    FOREIGN KEY (PermissionID) REFERENCES BankingSystem.Permissions(PermissionID)
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID),
+    FOREIGN KEY (PermissionID) REFERENCES Permissions(PermissionID)
 );
 
 -- Accounts
-CREATE TABLE BankingSystem.Accounts (
+CREATE TABLE Accounts (
     AccountID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
     BranchID INT NOT NULL,
@@ -73,28 +66,28 @@ CREATE TABLE BankingSystem.Accounts (
     IsMinorOperated BIT DEFAULT 0,
     IsPOAOperated BIT DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (UserID) REFERENCES BankingSystem.Users(UserID),
-    FOREIGN KEY (BranchID) REFERENCES BankingSystem.Branches(BranchID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (BranchID) REFERENCES Branches(BranchID)
 );
 
--- Term Deposits
-CREATE TABLE BankingSystem.TermDeposits (
+-- Term Deposits (If additional info needed)
+CREATE TABLE TermDeposits (
     TermDepositID INT PRIMARY KEY IDENTITY(1,1),
     AccountID INT NOT NULL,
     StartDate DATE NOT NULL,
     MaturityDate DATE NOT NULL,
     InterestRate DECIMAL(5, 2) NOT NULL,
-    FOREIGN KEY (AccountID) REFERENCES BankingSystem.Accounts(AccountID)
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
 );
 
--- Account Operations Logs
-CREATE TABLE BankingSystem.AccountOperations (
+-- Account Operations Logs (optional)
+CREATE TABLE AccountOperations (
     OperationID INT PRIMARY KEY IDENTITY(1,1),
     AccountID INT NOT NULL,
     OperationType VARCHAR(50), -- Deposit, Withdraw, Close, CheckBalance, Operate
     Amount DECIMAL(18, 2),
     OperationDate DATETIME DEFAULT GETDATE(),
     PerformedByUserID INT,
-    FOREIGN KEY (AccountID) REFERENCES BankingSystem.Accounts(AccountID),
-    FOREIGN KEY (PerformedByUserID) REFERENCES BankingSystem.Users(UserID)
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID),
+    FOREIGN KEY (PerformedByUserID) REFERENCES Users(UserID)
 );
